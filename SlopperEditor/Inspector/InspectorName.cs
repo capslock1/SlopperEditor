@@ -55,7 +55,7 @@ public class InspectorName : UIElement
         void Frame(FrameUpdateArgs args)
         {
             const float waitDelaySeconds = 1;
-            const float speedMult = -0.5f;
+            const float speedMult = -0.07f;
 
             if(_moveState == MoveState.WaitMin || _moveState == MoveState.WaitMax)
             {
@@ -65,7 +65,7 @@ public class InspectorName : UIElement
                 _waitTimer = 0;
             }
 
-            float deltaX = args.DeltaTime * owner.LastGlobalShape.Size.X * speedMult;
+            float deltaX = args.DeltaTime / owner.LastGlobalShape.Size.X * speedMult;
             var currentCenter = boxToMove.LocalShape.Center;
             switch(_moveState)
             {
