@@ -40,12 +40,11 @@ public class InspectorWindow : UIElement
             if (span.Length < 1)
                 continue;
 
-            if (toInspect.GetType() != span[0].DeclaringType)
-                content.UIChildren.Add(new TextBox(span[0].DeclaringType.Name, Style.Tint, default)
-                {
-                    LocalShape = new(0.5f, 0.5f, 0.5f, 0.5f),
-                    Scale = 1
-                });
+            content.UIChildren.Add(new TextBox(span[0].DeclaringType.Name, Style.Tint, default)
+            {
+                LocalShape = new(0.5f, 0.5f, 0.5f, 0.5f),
+                Scale = 1
+            });
 
             var list = new Spacer
             {

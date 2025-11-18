@@ -35,7 +35,10 @@ public class InspectorName : UIElement
     protected override void HandleEvent(ref MouseEvent e)
     {
         if(_box.LastGlobalShape.Size.X > LastGlobalShape.Size.X)
+        {
+            Children.FirstOfType<InspectorNameScroller>()?.Destroy();
             Children.Add(new InspectorNameScroller(this, _box));
+        }
         base.HandleEvent(ref e);
     }
 
@@ -55,7 +58,7 @@ public class InspectorName : UIElement
         void Frame(FrameUpdateArgs args)
         {
             const float waitDelaySeconds = 1;
-            const float speedMult = -0.07f;
+            const float speedMult = -0.05f;
 
             if(_moveState == MoveState.WaitMin || _moveState == MoveState.WaitMax)
             {
@@ -65,11 +68,11 @@ public class InspectorName : UIElement
                 _waitTimer = 0;
             }
 
-            float deltaX = args.DeltaTime / owner.LastGlobalShape.Size.X * speedMult;
+            float deltaX = args.DeltaTime * speedMult / owner.LastGlobalShape.Size.X;
             var currentCenter = boxToMove.LocalShape.Center;
             switch(_moveState)
             {
-                default: // wait min
+                case MoveState.WaitMin:
                 _moveState = MoveState.GoToMax;
                 return;
                 case MoveState.WaitMax:
