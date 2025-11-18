@@ -123,5 +123,10 @@ public abstract class Tab : BaseButton
         _textRenderer.TextColor = Style.ForegroundStrong;
     }
 
-    protected override UIElementSize GetSizeConstraints() => _textRenderer.LastSizeConstraints;
+    protected override UIElementSize GetSizeConstraints()
+    {
+        var constr = _textRenderer.LastSizeConstraints;
+        constr.GrowX = Alignment.Max;
+        return constr;
+    }
 }

@@ -46,32 +46,25 @@ public class InspectorWindow : UIElement
                     LocalShape = new(0.5f, 0.5f, 0.5f, 0.5f),
                     Scale = 1
                 });
-            var nameValues = new Spacer
+
+            var list = new Spacer
             {
                 LocalShape = new(0, 1, 1, 1),
                 MinHeight = 16,
             };
-            var names = new Spacer
-            {
-                LocalShape = new(0, 0, 0.5f, 1),
-                ScissorRegion = new(0, float.NegativeInfinity, 1, 1),
-            };
-            names.Layout.Value = DefaultLayouts.DefaultVertical;
-            var values = new Spacer
-            {
-                LocalShape = new(0.5f, 0, 1, 1),
-                ScissorRegion = new(0, float.NegativeInfinity, float.PositiveInfinity, 1),
-            };
-            values.Layout.Value = DefaultLayouts.DefaultVertical;
-            content.UIChildren.Add(nameValues);
-            nameValues.UIChildren.Add(names);
-            nameValues.UIChildren.Add(values);
+            list.Layout.Value = DefaultLayouts.DefaultVertical;
+
+            content.UIChildren.Add(list);
 
             foreach (var mem in span)
             {
                 var value = ReflectionCache.GetMemberInspectorHandler(mem.MemberType).CreateInspectorElement(mem, toInspect, this, editor);
-                values.UIChildren.Add(value);
-                names.UIChildren.Add(new InspectorName(mem.Name, value));
+                UIElement valueName = new();
+                
+                valueName.Layout.Value = DefaultLayouts.DefaultHorizontal;
+                list.UIChildren.Add(valueName);
+                valueName.UIChildren.Add(new InspectorName(mem.Name));
+                valueName.UIChildren.Add(value);
             }
         }
     }
